@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: pg
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ratelimiter
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  loadbalancer:
+    build: .
+    container_name: loadbalancer
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env                 # Загружаем переменные окружения из .env
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:

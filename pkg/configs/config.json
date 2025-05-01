@@ -1,0 +1,7 @@
+{
+  "port": "8080",
+  "backends": [
+    "http://host.docker.internal:9001",
+    "http://host.docker.internal:9002"
+  ]
+}
